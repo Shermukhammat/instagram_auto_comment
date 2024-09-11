@@ -1,0 +1,14 @@
+from loader import app, TOKEN, db
+from fastapi import Request, UploadFile, File, HTTPException, Query
+from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
+import os, shutil
+from uuid import uuid4
+
+
+
+os.makedirs("data/photos", exist_ok=True)
+app.mount("/photos", StaticFiles(directory="data/photos"), name="photos")
+    
+
+
