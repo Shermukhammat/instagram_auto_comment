@@ -51,6 +51,16 @@ class CommentAnswersData:
         con.commit()
         con.close()
     
+    def get_commit_answer_by_media_id(self, media_id : str) -> CommentAnswer:
+        con = sqlite3.connect(self.path)
+        cursor = con.cursor()
 
+        answer = None
+        for row in cursor.execute("SELECT * FROM comment_answers WHERE media_id == ?", (media_id,)):
+            answer = CommentAnswer(row[0], row[1], row[2], row[3])
+            self.comment_answers_cache[id] = answer
+
+        con.close()
+        return answer
 
     

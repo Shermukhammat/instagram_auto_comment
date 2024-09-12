@@ -9,7 +9,8 @@ class Dispatcher:
 
     def respond(self, entry : WebhookEntry):
         if entry.type == 'commit' and entry.text:
-            pass
             entry.media.id
+
+            
 
     
