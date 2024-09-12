@@ -1,4 +1,4 @@
-from loader import app, TOKEN, db
+from loader import app, TOKEN, db, WebhookEntry
 from fastapi import Request, HTTPException
 from fastapi.responses import PlainTextResponse
 
@@ -24,6 +24,12 @@ async def verify_webhook(request: Request):
 @app.post("/webhooks")
 async def handle_webhook(request: Request):
     data = await request.json()
-    print(f"Received data: {data}")
+    if data.get('object') == 'instagram' and data.get('entry'):
+        for data in data['entry']:
+            entry = WebhookEntry(data)
+            
+
+
+    # print(f"Received data: {data}")
     
     return {"success": True}
