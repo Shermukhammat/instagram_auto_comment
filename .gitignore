@@ -166,5 +166,8 @@ cython_debug/
 
 config.py
 *.db
+*jpg
+*jpeg
+*png
 data/photos/*
 test.py
