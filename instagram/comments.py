@@ -8,14 +8,12 @@ def answer_to_comment(entry : WebhookEntry, comment_answer : CommentAnswer, stor
     if storage.MY_INSTAGRAM_ID == entry.change_id:
         return
     
-    answer = storage.get_comment_answer_by_media_id(entry.media.id)
-    
-    if answer and is_code_exsit(entry.text, answer.code):
-        private_reply(entry.change_id, f"Kino likni: {comment_answer.url}")
-        
+    if is_code_exsit(entry.text, comment_answer.code):
+        status = private_reply(entry.change_id, f"Kino likni: {comment_answer.url}")
+        print(f"private replay status: {status}")
         if storage.PUBLIC_REPLAY_ALLOW:
-            public_replay(entry.change_id, f"profilingizga kino liknin yubordik")    
-
+            status = public_replay(entry.change_id, f"profilingizga kino liknin yubordik")    
+            print(f"public replay status: {status}")
 
 
 def private_reply(comment_id : str, message : str, token : str = None):

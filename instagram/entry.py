@@ -73,7 +73,11 @@ class WebhookEntry:
         """
         if self.data.get('changes') and isinstance(self.data['changes'], list):
             if isinstance(self.data['changes'][0], dict):
-                return self.data['changes'][0].get('value', {})
+                field = self.data['changes'][0].get('field')
+                answer = self.data['changes'][0].get('value', {})
+                if field:
+                    answer['field'] = field
+                return answer
         return {}
 
     @property

@@ -8,8 +8,8 @@ class Dispatcher:
         self.storage = storage
 
     def respond(self, entry : WebhookEntry):
-        if entry.type == 'commit' and entry.text:
-            comment_answer = self.storage.get_comment_answer_by_media_id(entry.media.id)
+        if entry.type == 'comments' and entry.text:
+            comment_answer = self.storage.get_comment_data(entry.media.id)
             if comment_answer:
                 answer_to_comment(entry, comment_answer, self.storage)
 
