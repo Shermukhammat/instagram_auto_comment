@@ -51,7 +51,7 @@ class CommentAnswersData:
         con.commit()
         con.close()
     
-    def get_commit_answer_by_media_id(self, media_id : str) -> CommentAnswer:
+    def get_comment_answer_by_media_id(self, media_id : str) -> CommentAnswer:
         con = sqlite3.connect(self.path)
         cursor = con.cursor()
 

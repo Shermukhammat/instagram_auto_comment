@@ -1,6 +1,5 @@
 from loader import app
-import handlers
-import uvicorn 
+import handlers, uvicorn 
 
 
 
