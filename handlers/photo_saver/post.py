@@ -5,7 +5,7 @@ from fastapi.staticfiles import StaticFiles
 import os, shutil
 from uuid import uuid4
 
-MAX_FILE_SIZE = 1024 * 300
+MAX_FILE_SIZE = 1024 * 1024
 ALLOWED_MIME_TYPES = ["image/jpeg", "image/jpg", "image/png"]
 
 os.makedirs("data/photos", exist_ok=True)
