@@ -9,7 +9,7 @@ MAX_FILE_SIZE = 1024 * 1024
 ALLOWED_MIME_TYPES = ["image/jpeg", "image/jpg", "image/png"]
 
 os.makedirs("data/photo", exist_ok=True)
-app.mount("/photo", StaticFiles(directory="data/photo"), name="photo")
+# app.mount("/photo", StaticFiles(directory="data/photo"), name="photo")
 
 
 
