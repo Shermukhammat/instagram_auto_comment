@@ -7,8 +7,8 @@ from uuid import uuid4
 
 
 
-os.makedirs("data/photos_test", exist_ok=True)
-app.mount("/photos_test", StaticFiles(directory="data/photos_test"), name="photos_test")
+os.makedirs("data/photo_test", exist_ok=True)
+app.mount("/photo_test", StaticFiles(directory="data/photo_test"), name="photo_test")
     
 
 

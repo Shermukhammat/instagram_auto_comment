@@ -8,12 +8,12 @@ from uuid import uuid4
 MAX_FILE_SIZE = 1024 * 1024
 ALLOWED_MIME_TYPES = ["image/jpeg", "image/jpg", "image/png"]
 
-os.makedirs("data/photos", exist_ok=True)
-app.mount("/photos", StaticFiles(directory="data/photos"), name="photos")
+os.makedirs("data/photo_test", exist_ok=True)
+# app.mount("/photo_test", StaticFiles(directory="data/photo_test"), name="photo_test")
 
 
 
-@app.post('/photo/upload')
+@app.post('/photo_test/upload')
 async def upload_photo(photo: UploadFile, token : str = Query(..., description="Token for authentication")):
     if token != TOKEN:
         raise HTTPException(403, detail='Invalid token')
@@ -29,7 +29,7 @@ async def upload_photo(photo: UploadFile, token : str = Query(..., description="
         raise HTTPException(500, 'cant generated file name')
         
     
-    path = f"data/photos/{file_name}"
+    path = f"data/photo_test/{file_name}"
     with open(path, 'wb') as file:
         shutil.copyfileobj(photo.file, file)
     
