@@ -1,6 +1,7 @@
 from loader import app, TOKEN #, dp, WebhookEntry
 from fastapi import Request, HTTPException
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import PlainTextResponse, JSONResponse
+
 
 
 
@@ -22,10 +23,20 @@ async def verify_webhook(request: Request):
 # This route will handle the incoming data from Instagram
 @app.post("/webhooks")
 async def handle_webhook(request: Request):
-    data = await request.json()
-    if data.get('object') == 'instagram' and data.get('entry'):
-        for data in data['entry']:
-            print(data['entry'])
+    try:
+        # Try to read the JSON body from the request
+        data = await request.json()
+    except Exception as e:
+        # Return a 400 Bad Request response if the JSON body is missing or invalid
+        raise HTTPException(status_code=400, detail="Invalid JSON body")
+
+    print(data)
+    if type(data) == dict and data.get('object') == 'instagram' and type(data.get('entry')) == list:
+        entry : list = data['entry']
+        for entry_data in entry:
+            
+            entry_data
+    #         print(data['entry'])
             # entry = WebhookEntry(data)
             # dp.respond(entry)
     # print(f"Received data: {data}")
