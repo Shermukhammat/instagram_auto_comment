@@ -1,3 +1,1 @@
-from . import photo_saver
-from . import photo_saver_test
-from . import instagram
+from . import photo_saver, photo_saver_test

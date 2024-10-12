@@ -1,4 +1,4 @@
-from loader import app, TOKEN, db
+from loader import app, TOKEN
 from fastapi import Request, UploadFile, File, HTTPException, Query
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles

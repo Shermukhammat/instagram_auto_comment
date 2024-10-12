@@ -1,17 +1,11 @@
-from loader import app, TOKEN, db
+from loader import app, TOKEN, MAX_FILE_SIZE, ALLOWED_MIME_TYPES
 from fastapi import Request, UploadFile, HTTPException, Query
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 import os, shutil
 from uuid import uuid4
 
-MAX_FILE_SIZE = 1024 * 1024
-ALLOWED_MIME_TYPES = ["image/jpeg", "image/jpg", "image/png"]
-
 os.makedirs("data/photo", exist_ok=True)
-# app.mount("/photo", StaticFiles(directory="data/photo"), name="photo")
-
-
 
 @app.post('/photo/upload')
 async def upload_photo(photo: UploadFile, token : str = Query(..., description="Token for authentication")):
@@ -28,18 +22,16 @@ async def upload_photo(photo: UploadFile, token : str = Query(..., description="
     if not file_name:
         raise HTTPException(500, 'cant generated file name')
         
-    
     path = f"data/photo/{file_name}"
     with open(path, 'wb') as file:
         shutil.copyfileobj(photo.file, file)
     
-    db.add_file(file_name)
     return JSONResponse(content={"filename": file_name, "message": "Photo uploaded successfully!"})
 
 
 def get_file_name(photo : UploadFile, atemps : int = 3) -> str:
     for _ in range(atemps):
         filename = f"{uuid4().hex}.{photo.content_type.split('/')[-1]}" 
-        if db.is_file_exsist(filename):
+        if os.path.exists(f"data/photo/{filename}"):
             continue
-        return filename
+        return filename 
