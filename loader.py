@@ -5,4 +5,4 @@ from data import DataBase, CommentAnswer
 
 
 app = FastAPI()
-db = DataBase('data/data.db')
+# db = DataBase('data/data.db')
