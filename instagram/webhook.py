@@ -5,7 +5,7 @@ from fastapi.responses import PlainTextResponse
 
 
 # This route will handle the verification process from Instagram
-@app.get("/webhook")
+@app.get("/webhooks")
 async def verify_webhook(request: Request):
     mode = request.query_params.get('hub.mode')
     token = request.query_params.get('hub.verify_token')
@@ -20,7 +20,7 @@ async def verify_webhook(request: Request):
 
 
 # This route will handle the incoming data from Instagram
-@app.post("/webhook")
+@app.post("/webhooks")
 async def handle_webhook(request: Request):
     data = await request.json()
     if data.get('object') == 'instagram' and data.get('entry'):
