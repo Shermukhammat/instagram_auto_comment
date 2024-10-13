@@ -63,6 +63,6 @@ def public_replay(comment_id : int, message : str, proxies : dict = None):
 
 def is_code_exsit(comment : str, code : str):
     if type(code) == str and type(comment) == str:
-        if re.search(code, comment.lower()):
+        if code.strip().lower() == comment.strip().lower():
             return True
     return False

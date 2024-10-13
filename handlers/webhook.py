@@ -36,7 +36,6 @@ async def handle_webhook(request: Request):
         entry : list = data['entry']
         for entry_data in entry:
             entry_obj = WebhookEntry(entry_data)
-            # print(entry_obj.data)
             await dp.respond(entry_obj)
 
     
