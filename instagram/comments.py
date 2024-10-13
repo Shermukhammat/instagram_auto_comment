@@ -32,7 +32,12 @@ def private_reply(comment_id : str, message : str, proxies : dict = None):
     params = {'access_token' : INSTAGRAM_TOKEN}
     data = {"recipient": {"comment_id": comment_id},
             "message": {"text": message}}
-    respond = requests.post(f"https://graph.instagram.com/v20.0/me/messages", params=params, json=data, proxies = proxies) 
+    respond = requests.post(f"https://graph.instagram.com/v20.0/me/messages", 
+                            params=params, 
+                            json=data, 
+                            proxies = proxies,
+                            timeout=5)
+     
     if respond.status_code == 200:
         return True
     return False
@@ -43,7 +48,11 @@ def public_replay(comment_id : int, message : str, proxies : dict = None):
     data = {"message": message}
     
  
-    respond = requests.post(f"https://graph.instagram.com/v20.0/{comment_id}/replies", params = params, json = data, proxies=proxies)
+    respond = requests.post(f"https://graph.instagram.com/v20.0/{comment_id}/replies", 
+                            params = params, 
+                            json = data, 
+                            proxies=proxies,
+                            timeout=5)
     if respond.status_code == 200:
         return True
     return False
