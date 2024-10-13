@@ -39,7 +39,7 @@ def private_reply(comment_id : str, message : str, proxies : dict = None):
         
     except Exception as e:
         print(f"private_reply: {e}")
-        
+
     return False
 
 
@@ -62,6 +62,7 @@ def public_replay(comment_id : int, message : str, proxies : dict = None):
 
 
 def is_code_exsit(comment : str, code : str):
-    if re.search(code, comment.lower()):
-        return True
+    if type(code) == str and type(comment) == str:
+        if re.search(code, comment.lower()):
+            return True
     return False
