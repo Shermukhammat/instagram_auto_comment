@@ -22,6 +22,7 @@ class UGUtils:
     def __init__(self, yaml_file: str) -> None:
         self.path = yaml_file
         self.data = self.get_yaml()
+
     def get_yaml(self) -> dict:
         if not os.path.exists(self.path):
             with open(self.path, "w", encoding="utf-8") as file:
@@ -50,6 +51,7 @@ class Params:
         self.yaml = UGUtils(yaml_path)
         self.data = self.yaml.get_yaml()
         
+        self.SERVER : bool = self.data.get('SERVER')
         self.MY_INSTAGRAM_ID : str = self.data.get('MY_INSTAGRAM_ID')
         self.PUBLIC_REPLAY_ALLOW : bool = self.data.get('PUBLIC_REPLAY_ALLOW', True)
     
