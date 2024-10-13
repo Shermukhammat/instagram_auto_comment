@@ -9,6 +9,9 @@ class CommentAnswer:
         self.code = code
         self.url = url
 
+    def get_row_data(self) -> dict:
+        return {'id' : self.id, 'media_id': self.media_id, 'code' : self.code, 'url' : self.url}
+
 class CommentAnswersData:
     def __init__(self, path : str) -> None:
         self.path = path
@@ -32,7 +35,7 @@ class CommentAnswersData:
         cursor = con.cursor()
 
         answer = None
-        for row in cursor.execute("SELECT * FROM comment_answers WHERE id == ?", (id,)):
+        for row in cursor.execute("SELECT * FROM comment_answers WHERE id == ?;", (id,)):
             answer = CommentAnswer(row[0], row[1], row[2], row[3])
             self.comment_answers_cache[id] = answer
 
@@ -56,11 +59,26 @@ class CommentAnswersData:
         cursor = con.cursor()
 
         answer = None
-        for row in cursor.execute("SELECT * FROM comment_answers WHERE media_id == ?", (media_id,)):
+        for row in cursor.execute("SELECT * FROM comment_answers WHERE media_id == ?;", (media_id,)):
             answer = CommentAnswer(row[0], row[1], row[2], row[3])
             self.comment_answers_cache[id] = answer
 
         con.close()
         return answer
+    
+
+    def get_comments_data(self) -> list[CommentAnswer]:
+        if self.comment_answers_cache.get(id):
+            return self.comment_answers_cache[id]
+        
+        con = sqlite3.connect(self.path)
+        cursor = con.cursor()
+
+        answers = []
+        for row in cursor.execute("SELECT * FROM comment_answers;"):
+            answers.append(CommentAnswer(row[0], row[1], row[2], row[3]))
+
+        con.close()
+        return answers
 
     

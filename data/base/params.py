@@ -51,7 +51,7 @@ class Params:
         self.yaml = UGUtils(yaml_path)
         self.data = self.yaml.get_yaml()
         
-        self.SERVER : bool = self.data.get('SERVER')
+        self.SERVER : bool = self.data.get('SERVER', False)
         self.MY_INSTAGRAM_ID : str = self.data.get('MY_INSTAGRAM_ID')
         self.PUBLIC_REPLAY_ALLOW : bool = self.data.get('PUBLIC_REPLAY_ALLOW', True)
     

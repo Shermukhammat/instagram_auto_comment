@@ -31,17 +31,13 @@ async def handle_webhook(request: Request):
         # Return a 400 Bad Request response if the JSON body is missing or invalid
         raise HTTPException(status_code=400, detail="Invalid JSON body")
 
-    print(data)
+    # print(data)
     if type(data) == dict and data.get('object') == 'instagram' and type(data.get('entry')) == list:
         entry : list = data['entry']
         for entry_data in entry:
             entry_obj = WebhookEntry(entry_data)
-            print(entry_obj.data)
+            # print(entry_obj.data)
             await dp.respond(entry_obj)
-            
-    #         print(data['entry'])
-            # entry = WebhookEntry(data)
-            # dp.respond(entry)
-    # print(f"Received data: {data}")
+
     
     return {"success": True}
