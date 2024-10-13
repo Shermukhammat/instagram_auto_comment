@@ -66,9 +66,11 @@ class WebhookEntry:
         Returns:
             datetime: The datetime object representing the time in UTC.
         """
-        if self.data.get('time') and isinstance(self.data['time'], int):
-            return datetime.fromtimestamp(self.data['time'], tz=pytz.UTC)
-        
+        try:
+            if self.data.get('time') and isinstance(self.data['time'], int):
+                return datetime.fromtimestamp(self.data['time'], tz=pytz.UTC)
+        except:
+            return datetime.now(pytz.UTC)
 
     def get_user(self) -> User:
         """
