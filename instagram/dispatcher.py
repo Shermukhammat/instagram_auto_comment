@@ -10,7 +10,7 @@ class Dispatcher:
         self.storage = storage
 
     async def respond(self, entry : WebhookEntry):
-        if entry.type == Field.comments and entry.text:
+        if entry.type == Field.comments and type(entry.text) == str:
             comment_answer = self.storage.get_comment_data(entry.media.id)
             if comment_answer:
                 answer_to_comment(entry, comment_answer, self.storage)
