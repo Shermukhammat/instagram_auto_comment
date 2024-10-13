@@ -170,4 +170,5 @@ config.py
 *jpeg
 *png
 data/photos/*
+data/static/*
 test.py
