@@ -2,6 +2,7 @@ from loader import app, TOKEN, db, CommentAnswer, INSTAGRAM_TOKEN, proxies
 from fastapi import Request, HTTPException, Query
 from fastapi.responses import PlainTextResponse, JSONResponse
 import requests, re
+from instagram.tor import reload_tor
 
 
 @app.post("/comment")
@@ -41,13 +42,21 @@ def get_medias(proxies : dict) -> dict:
     try:
         re = requests.get(f"https://graph.instagram.com/me/media?fields=id,permalink&access_token={INSTAGRAM_TOKEN}",
                       proxies = proxies,
-                      timeout=5)
+                      timeout=10)
+        if re.status_code == 200:
+            return re.json()
+        
+    except Exception as e:
+        reload_tor()
+        re = requests.get(f"https://graph.instagram.com/me/media?fields=id,permalink&access_token={INSTAGRAM_TOKEN}",
+                      proxies = proxies,
+                      timeout=10)
+        if re.status_code == 200:
+            return re.json()
         
     except Exception as e:
         print(f"get_medias: {e}")
 
-    if re.status_code == 200:
-        return re.json()
     return {}
 
 def extract_media_id(instagram_ur : str) -> str:

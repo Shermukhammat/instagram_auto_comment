@@ -1,6 +1,7 @@
 from config import INSTAGRAM_TOKEN, proxies
 from data import CommentAnswer, DataBase
 from .entry import WebhookEntry
+from .tor import reload_tor
 import requests, re 
 
 
@@ -33,11 +34,19 @@ def private_reply(comment_id : str, message : str, proxies : dict = None):
                             params=params, 
                             json=data, 
                             proxies = proxies,
-                            timeout=5) 
+                            timeout=10) 
         if respond.status_code == 200:
             return True
         
     except Exception as e:
+        reload_tor()
+        respond = requests.post(f"https://graph.instagram.com/v20.0/me/messages", 
+                            params=params, 
+                            json=data, 
+                            proxies = proxies,
+                            timeout=10) 
+        if respond.status_code == 200:
+            return True
         print(f"private_reply: {e}")
 
     return False
@@ -52,9 +61,19 @@ def public_replay(comment_id : int, message : str, proxies : dict = None):
                             params = params, 
                             json = data, 
                             proxies=proxies,
-                            timeout=5)
+                            timeout=10)
         if respond.status_code == 200:
             return True
+    except Exception as e:
+        reload_tor()
+        respond = requests.post(f"https://graph.instagram.com/v20.0/{comment_id}/replies", 
+                            params = params, 
+                            json = data, 
+                            proxies=proxies,
+                            timeout=10)
+        if respond.status_code == 200:
+            return True
+    
     except Exception as e:
         print(f"public_replay: {e}")
     
